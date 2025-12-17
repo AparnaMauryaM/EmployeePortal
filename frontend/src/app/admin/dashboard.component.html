@@ -1,0 +1,51 @@
+<!-- admin-dashboard.component.html -->
+<div class="dashboard">
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="admin-info">
+      <h2>Admin Dashboard</h2>
+      <span class="admin-name">Welcome, Admin</span>
+    </div>
+    <button class="logout-btn" (click)="logout()">Logout</button>
+  </header>
+
+  <!-- Content -->
+  <div class="dashboard-content">
+    <h3>Employee List</h3>
+
+    @if(employeeList.length)
+    {
+        <table class="employee-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Position</th>
+          <th>Department</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (emp of employeeList; track $index) {
+          <tr>
+            <td>{{ $index }}</td>
+            <td>{{ emp.NAME }}</td>
+            <td>{{ emp.USERNAME }}</td>
+            <td>{{ emp.EMAIL }}</td>
+            <td>{{ emp.POSITION}}</td>
+            <td>{{ emp.DEPARTMENT}}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    }
+    @else {
+        <p class="no-data">No employees found.</p>
+    }
+  </div>
+</div>
+
+
+
+

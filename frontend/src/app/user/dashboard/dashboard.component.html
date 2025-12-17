@@ -1,0 +1,57 @@
+<!-- employee-dashboard.component.html -->
+<div class="employee-dashboard">
+
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="employee-info">
+      <h2>Employee Dashboard</h2>
+      <span class="employee-name">Welcome, {{ employee.NAME }}</span>
+    </div>
+    <button class="logout-btn" (click)="logout()">Logout</button>
+  </header>
+
+  <!-- Content -->
+  <section class="dashboard-content">
+    <h3>Your Profile Details</h3>
+
+    @if (employee) {
+      <div class="profile-card">
+        <div class="profile-row">
+          <span class="label">Employee ID</span>
+          <span class="value">{{ employee.EMPLOYEE_ID }}</span>
+        </div>
+
+        <div class="profile-row">
+          <span class="label">Name</span>
+          <span class="value">{{ employee.NAME }}</span>
+        </div>
+
+        <div class="profile-row">
+          <span class="label">Username</span>
+          <span class="value">{{ employee.USERNAME }}</span>
+        </div>
+
+        <div class="profile-row">
+          <span class="label">Email</span>
+          <span class="value">{{ employee.EMAIL }}</span>
+        </div>
+
+        <div class="profile-row">
+          <span class="label">Position</span>
+          <span class="value">{{ employee.POSITION }}</span>
+        </div>
+
+        <div class="profile-row">
+          <span class="label">Department</span>
+          <span class="value">{{ employee.DEPARTMENT }}</span>
+        </div>
+      </div>
+    } @else {
+      <p class="no-data">Employee details not available.</p>
+    }
+  </section>
+</div>
+
+
+
+
