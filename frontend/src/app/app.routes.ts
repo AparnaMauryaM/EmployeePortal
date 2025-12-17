@@ -25,5 +25,9 @@ export const routes: Routes = [
         component: UserDashboard,
         canActivate: [authGuard],
         data: {role: 'employee'}
+    },
+    {
+        path: '**',
+        redirectTo: 'login'
     }
 ];

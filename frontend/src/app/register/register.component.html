@@ -6,26 +6,69 @@
     <div class="form-group">
       <label>Full Name</label>
       <input type="text" formControlName="name" placeholder="Enter full name" />
+      @if(signupForm.controls['name'].touched && signupForm.controls['name'].invalid)
+      {
+        @if(signupForm.controls['name'].errors?.['required'])
+        {
+            <span class="error-message">Name is required</span>
+        }
+      }
     </div>
 
     <div class="form-group">
       <label>Username</label>
       <input type="text" formControlName="username" placeholder="Choose username" />
+      @if(signupForm.controls['username'].touched && signupForm.controls['username'].invalid)
+      {
+        @if(signupForm.controls['username'].errors?.['required'])
+        {
+            <span class="error-message">Username is required</span>
+        }
+      }
     </div>
 
     <div class="form-group">
       <label>Email</label>
       <input type="email" formControlName="email" placeholder="Enter email" />
+      @if(signupForm.controls['email'].touched && signupForm.controls['email'].invalid)
+      {
+        @if(signupForm.controls['email'].errors?.['required'])
+        {
+            <span class="error-message">Email is required</span>
+        }
+        @else if(signupForm.controls['email'].errors?.['email'])
+        {
+            <span class="error-message">Invalid email</span>
+        }
+      }
     </div>
 
     <div class="form-group">
       <label>Password</label>
       <input type="password" formControlName="password" placeholder="Enter password" />
+      @if(signupForm.controls['password'].touched && signupForm.controls['password'].invalid)
+      {
+        @if(signupForm.controls['password'].errors?.['required'])
+        {
+            <span class="error-message">Password is required</span>
+        }
+        @else if(signupForm.controls['password'].errors?.['minlength'])
+        {
+            <span class="error-message">Minimum 6 character required</span>
+        }
+      }
     </div>
 
     <div class="form-group">
       <label>Position</label>
       <input type="text" formControlName="position" placeholder="Job position" />
+      @if(signupForm.controls['position'].touched && signupForm.controls['position'].invalid)
+      {
+        @if(signupForm.controls['position'].errors?.['required'])
+        {
+            <span class="error-message">Position is required</span>
+        }
+      }
     </div>
 
     <div class="form-group">
@@ -38,8 +81,14 @@
             {{ dept }}
           </option>
         }
-        
       </select>
+       @if(signupForm.controls['department'].touched && signupForm.controls['department'].invalid)
+      {
+        @if(signupForm.controls['department'].errors?.['required'])
+        {
+            <span class="error-message">Department is required</span>
+        }
+      }
     </div>
 
     <button type="submit" [disabled]="signupForm.invalid">Create Account</button>

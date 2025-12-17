@@ -31,8 +31,6 @@ function isDefaultAdmin( username: string, password: string )
     return result;
 }
 
-
-
 async function doLogin(username: string, password: string) {
  
   let result : {isDone: number, query?: Employee};
@@ -95,8 +93,6 @@ export async function createToken( userId: number,username: string,role: boolean
 
   return token;
 }
-
-
 
 async function addEmployee(userDetails: UserDetail) {
   let isDone = 0

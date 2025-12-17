@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   
   signinForm!: FormGroup;
+  serverError = '';
 
   constructor(private fb: FormBuilder,
     private _authService: AuthenticationService,
@@ -55,12 +56,14 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
+    this.serverError = '';
     if (this.signinForm.valid) {
       console.log(this.signinForm.value);
       this._authService.doLogin(this.signinForm.value)
       .pipe(
         catchError((err)=>{
           console.log(err);
+          this.serverError = err.error.message;
           return throwError(() => err);
         })
       )
