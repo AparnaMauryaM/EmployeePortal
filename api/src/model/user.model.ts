@@ -1,3 +1,5 @@
+import { JWTPayload } from "jose";
+
 export interface Employee {
   EMPLOYEE_ID: number;
   USERNAME: string;

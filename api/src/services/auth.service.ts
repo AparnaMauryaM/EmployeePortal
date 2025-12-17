@@ -13,7 +13,7 @@ function isDefaultAdmin( username: string, password: string )
     }
     if(username == "admin" )
     {
-      if(password != "admin1")
+      if(password != "mindfire")
       {
         result.message = "Invalid Username or password"
       }
@@ -63,11 +63,11 @@ async function doLogin(username: string, password: string) {
   return result;
 }
 
-export async function createToken(
-  userId: number,
-  username: string,
-  role: boolean
-): Promise<string> {
+export async function createToken( userId: number,username: string,role: boolean): Promise<string> {
+  
+  const JWT_SECRET = new TextEncoder().encode(
+  process.env.JWT_SECRET || "supersecretkey"
+);
   const token = await new SignJWT({
     id: userId,
     username,
@@ -76,7 +76,7 @@ export async function createToken(
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime("7d")
-    .sign(secret);
+    .sign(JWT_SECRET);
 
   return token;
 }
