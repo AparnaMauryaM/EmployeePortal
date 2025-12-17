@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import userService from "../services/user.service";
+import employeeService from "../services/employee.service";
 
 export default{
     getAllEmployee: async (req: Request, res : Response) => {
       const result = { error: 200, message: '', employee: [{}]};
       try
       {
-        const resultDB = await userService.fetchAllEmployee();
+        const resultDB = await employeeService.fetchAllEmployee();
         if(resultDB.isDone)
         {
           result.employee = resultDB.detail;

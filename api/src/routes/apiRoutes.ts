@@ -11,9 +11,9 @@ router.get("/test", (req, res) => {
 });
 router.post("/login", authController.login);
 
-router.post("/register", userController.register);
+router.post("/register", authController.register);
 router.get("/admin/getAllEmployees", verifyToken, adminController.getAllEmployee);
-router.get("/user/getProfile", verifyToken, userController.getDetail)
+router.get("/user/getProfile", verifyToken, userController.getProfileDetail)
 
 
 export default router;

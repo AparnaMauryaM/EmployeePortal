@@ -2,8 +2,14 @@ import {pool, sql } from "../db/connectSql";
 import { SignJWT } from "jose";
 import { Employee } from "../model/user.model.js";
 
-const secret = new TextEncoder().encode("SECRET_KEY");
-
+interface UserDetail {
+  name: string,
+  username: string,
+  password: string,
+  email: string,
+  position: string,
+  department: string
+}
 
 function isDefaultAdmin( username: string, password: string )
 {
@@ -63,6 +69,15 @@ async function doLogin(username: string, password: string) {
   return result;
 }
 
+/**
+ * @function - createToken
+ * Creates token for an authenticated user.
+ * @param - userId   
+ * @param - username
+ * @param - role     
+ * @returns A signed JWT token string valid for 7 days
+ */
+
 export async function createToken( userId: number,username: string,role: boolean): Promise<string> {
   
   const JWT_SECRET = new TextEncoder().encode(
@@ -80,7 +95,34 @@ export async function createToken( userId: number,username: string,role: boolean
 
   return token;
 }
+
+
+
+async function addEmployee(userDetails: UserDetail) {
+  let isDone = 0
+  try
+  {
+    const conn = await pool;
+
+    const dbresult = await conn
+    .request()
+    .input("name", sql.NVarChar, userDetails.name)
+    .input("username", sql.NVarChar, userDetails.username)
+    .input("password", sql.NVarChar, userDetails.password)
+    .input("email", sql.NVarChar, userDetails.email)
+    .input("position", sql.NVarChar, userDetails.position)
+    .input("department", sql.NVarChar, userDetails.department)
+    .input("role", sql.Bit, 0)
+    .output("isDone", sql.Bit)
+    .output("ERROR_MESSAGE", sql.VarChar(sql.MAX))
+    .execute("ADDEMPLOYEEDETAILS");
+    isDone = dbresult.output.isDone;
+  }
+  catch(err){}
+  return isDone; // rows returned from SP
+}
 export default {
   doLogin,
-  createToken
+  createToken,
+  addEmployee
 };

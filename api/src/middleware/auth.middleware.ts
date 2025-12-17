@@ -1,28 +1,20 @@
 import { Request, Response, NextFunction } from "express";
-import { JWTPayload, jwtVerify } from "jose";
+import { jwtVerify } from "jose";
 
-// Secret must be Uint8Array
-  const JWT_SECRET = new TextEncoder().encode(
+// Secret Key
+const JWT_SECRET = new TextEncoder().encode(
   process.env.JWT_SECRET || "supersecretkey"
 );
-
-
-// Extend Express Request
-export interface AuthRequest extends Request {
-  user?: JWTPayload;
-}
-
-export async function verifyToken(
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-) {
-  try {
+ 
+export async function verifyToken(req: Request,res: Response,next: NextFunction)
+{
+  try
+  {
     // Check token existence
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return res.status(401).json({ message: "Token missing" });
+      return res.status(401).json({message: "Token missing" });
     }
 
     const token = authHeader.split(" ")[1];
@@ -30,13 +22,23 @@ export async function verifyToken(
     // Verify token
     const { payload } = await jwtVerify(token, JWT_SECRET);
 
+    if(
+      typeof payload !== "object" ||
+      payload === null ||
+      typeof payload.id !== "number" ||
+      typeof payload.username !== "string" ||
+      typeof payload.role !== "string"
+    ) 
+    {
+      return res.status(401).json({message: "Invalid token" });
+    }
+  
     //Pass token details forward
-    req.user = payload;
-
+    req.user = {id: payload.id, role: payload.role, username: payload.username};
     next();
-  } catch (err) {
-    return res.status(401).json({
-      message: "Invalid or expired token"
-    });
+  }
+  catch (err)
+  {
+    return res.status(401).json({message: "Invalid or expired token"});
   }
 }
