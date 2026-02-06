@@ -1,4 +1,7 @@
+// ExecutionContext provides details about the current request
 import { ExecutionContext, Injectable } from '@nestjs/common';
+
+// Reflector is used to read metadata set by decorators
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { IS_PUBLIC_KEY } from '../decorators/publicRoutes.decorators';

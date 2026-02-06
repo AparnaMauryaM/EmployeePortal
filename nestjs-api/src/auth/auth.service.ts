@@ -61,6 +61,7 @@ export class AuthService {
    * @function: doLogin
    * @param : dto
    * @returns : Promise<object>
+   * @description : Return token after checking usernam and password
    */
   async doLogin(dto: LoginDto): Promise<object> {
     try {
